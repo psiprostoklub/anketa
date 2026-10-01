@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fbfafc">
+  <title>Анкета специалиста | Психология просто</title>
+  <style>
+    :root{
+      --bg:#fbfafc;
+      --text:#3a3740;
+      --muted:#7c7583;
+      --accent:#7658d6;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;width:100%;min-height:100%;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+    body{overflow:hidden}
+    .loader{
+      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+      background:var(--bg);z-index:10;transition:opacity .25s ease,visibility .25s ease;
+    }
+    .loader.hidden{opacity:0;visibility:hidden}
+    .loader-card{text-align:center;padding:24px}
+    .spinner{
+      width:38px;height:38px;margin:0 auto 14px;border:3px solid #e8e1f6;
+      border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;
+    }
+    .loader-title{font-size:16px;font-weight:700;margin-bottom:4px}
+    .loader-text{font-size:13px;color:var(--muted)}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    iframe{
+      display:block;border:0;width:100%;height:100vh;height:100dvh;background:var(--bg);
+    }
+    .fallback{
+      display:none;position:fixed;inset:0;align-items:center;justify-content:center;
+      padding:24px;background:var(--bg);z-index:20;
+    }
+    .fallback-card{max-width:520px;background:#fff;border:1px solid #ece8f2;border-radius:20px;padding:26px;box-shadow:0 12px 34px rgba(58,55,64,.08);line-height:1.55}
+    .fallback a{color:var(--accent);font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="loader" id="loader" aria-live="polite">
+    <div class="loader-card">
+      <div class="spinner" aria-hidden="true"></div>
+      <div class="loader-title">Открываем анкету</div>
+      <div class="loader-text">Психология просто</div>
+    </div>
+  </div>
+
+  <iframe
+    id="appFrame"
+    title="Анкета специалиста — Психология просто"
+    src="https://script.google.com/macros/s/AKfycbwMbhz7Hbspqaz47_A4gI-TUq_3zJJ9zMkzFZbSHmu6Tfp7CcIJSdJzttfNG4ZR7JzB/exec"
+    allow="camera; microphone; clipboard-read; clipboard-write"
+    loading="eager"
+    referrerpolicy="strict-origin-when-cross-origin">
+  </iframe>
+
+  <div class="fallback" id="fallback">
+    <div class="fallback-card">
+      <strong>Анкета не открылась внутри страницы.</strong><br><br>
+      Откройте её напрямую по ссылке:<br>
+      <a href="https://script.google.com/macros/s/AKfycbwMbhz7Hbspqaz47_A4gI-TUq_3zJJ9zMkzFZbSHmu6Tfp7CcIJSdJzttfNG4ZR7JzB/exec" target="_blank" rel="noopener">Открыть анкету</a>
+    </div>
+  </div>
+
+  <script>
+    const frame = document.getElementById('appFrame');
+    const loader = document.getElementById('loader');
+    const fallback = document.getElementById('fallback');
+
+    let loaded = false;
+    frame.addEventListener('load', () => {
+      loaded = true;
+      loader.classList.add('hidden');
+    });
+
+    // Если браузер или политика встраивания не дали загрузить форму,
+    // показываем безопасную прямую ссылку.
+    setTimeout(() => {
+      if (!loaded) {
+        loader.classList.add('hidden');
+        fallback.style.display = 'flex';
+      }
+    }, 12000);
+  </script>
+</body>
+</html>
